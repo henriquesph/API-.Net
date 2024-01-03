@@ -1,0 +1,6 @@
+@RestWithdotNet_HostAddress = http://localhost:5104
+
+GET {{RestWithdotNet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
