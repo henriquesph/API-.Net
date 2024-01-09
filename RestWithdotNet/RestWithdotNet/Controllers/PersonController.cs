@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace RestWithDotNet.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
 
@@ -25,7 +25,7 @@ namespace RestWithDotNet.Controllers
 
 
         [HttpGet]
-        public IActionResult Get(string firstNumber, string secondNumber)
+        public IActionResult Get()
         {
             return Ok(_personService.FindAll());
         }
