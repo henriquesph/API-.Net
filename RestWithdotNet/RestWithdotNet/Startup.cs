@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestWithDotNet.Model.Context;
 using RestWithDotNet.Services.Implementations;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,9 @@ namespace RestWithDotNet
         {
 
             services.AddControllers();
+
+            var connection = Configuration["MySQLConnection:MySQLConnectionString"];  // mesma que está na appsettings.json
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
             // Dependency Injection
             services.AddScoped<IPersonService, PersonServiceImplementation>();
