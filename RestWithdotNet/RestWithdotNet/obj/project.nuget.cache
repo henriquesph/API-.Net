@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EGtH8fDkg7sil/crjJrkf4cHCcdQlC+RFF1ttKeqEWRIdN8UbqGmhQ/u52fTx4NmdcaaN72hKZhnd6U3f/tSmQ==",
+  "dgSpecHash": "u4dKPdNDkxplsc2gdIjdLwMInQ5+OndHNscLHjG9JhsQ90U5Or42rXLuRWimxYq0T/CeWChV4ym6HTfzb7VmhQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\hpereir.RADHA\\Documents\\GitHub\\API .NET\\API-.Net\\RestWithdotNet\\RestWithDotNet\\RestWithDotNet.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hpereir.RADHA\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "C:\\Users\\hpereir.RADHA\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\hpereir.RADHA\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\hpereir.RADHA\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

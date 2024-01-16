@@ -8,15 +8,15 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace RestWithDotNet.Services.Implementations
+namespace RestWithDotNet.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         //private volatile int count; // mockando um ID - simulando uma consulta no banco
 
         private MySQLContext _context; // injeção de dependencia
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -101,7 +101,7 @@ namespace RestWithDotNet.Services.Implementations
             }
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }

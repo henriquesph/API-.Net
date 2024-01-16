@@ -8,11 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestWithDotNet.Model.Context;
-using RestWithDotNet.Services.Implementations;
+using RestWithDotNet.Business.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RestWithDotNet.Business;
+using RestWithDotNet.Repository;
+using RestWithDotNet.Repository.Implementations;
 
 namespace RestWithDotNet
 {
@@ -34,8 +37,11 @@ namespace RestWithDotNet
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];  // mesma que está na appsettings.json
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
+            services.AddApiVersioning();
+
             // Dependency Injection
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
