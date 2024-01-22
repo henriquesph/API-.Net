@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using RestWithDotNet.Data.Converter.Implementations;
+using RestWithDotNet.Data.VO;
 using RestWithDotNet.Model;
 using RestWithDotNet.Model.Context;
 using RestWithDotNet.Repository;
@@ -16,33 +18,39 @@ namespace RestWithDotNet.Business.Implementations // Regras de negócio separada
         //private volatile int count; // mockando um ID - simulando uma consulta no banco
 
         //private MySQLContext _context; // injeção de dependencia
-        private readonly IPersonRepository _repository;
+        private readonly IRepository<Person> _repository;
+        private readonly PersonConverter _converter;
 
-        public PersonBusinessImplementation(IPersonRepository repository)
+        public PersonBusinessImplementation(IRepository<Person> repository)
         {
             _repository = repository;
+            _converter = new PersonConverter();
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _repository.FindAll();
-
-        }
-
-        public Person FindById(long id)
-        {
-            return _repository.FindById(id);
+            return _converter.Parse(_repository.FindAll());
 
         }
 
-        public Person Create(Person person)
+        public PersonVO FindById(long id)
         {
-            return _repository.Create(person);
+            return _converter.Parse(_repository.FindById(id));
+
         }
 
-        public Person Update(Person person)
+        public PersonVO Create(PersonVO person) // primeiro converter VO para entidade
         {
-            return _repository.Update(person);
+            var personEntity = _converter.Parse(person); // Parseando para entidade
+            personEntity = _repository.Create(personEntity); // Persistindo os dados
+            return _converter.Parse(personEntity); // Convertendo p/ VO e retornando a resposta
+        }
+
+        public PersonVO Update(PersonVO person)
+        {
+            var personEntity = _converter.Parse(person);
+            personEntity = _repository.Update(personEntity);
+            return _converter.Parse(personEntity);
         }
 
         public void Delete(long id)

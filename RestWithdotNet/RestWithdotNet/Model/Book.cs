@@ -1,13 +1,12 @@
-﻿using System;
+﻿using RestWithDotNet.Model.Base;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithDotNet.Model
 {
     [Table("books")] // para ficar igual o definido no banco
-    public class Book
+    public class Book : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
         [Column("author")]
         public string Author { get; set; }
         [Column("launch_date")]

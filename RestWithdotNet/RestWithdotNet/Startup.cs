@@ -15,8 +15,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestWithDotNet.Business;
 using RestWithDotNet.Repository;
-using RestWithDotNet.Repository.Implementations;
 using Serilog;
+using RestWithDotNet.Repository.Generic;
 
 namespace RestWithDotNet
 {
@@ -54,10 +54,9 @@ namespace RestWithDotNet
 
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
 

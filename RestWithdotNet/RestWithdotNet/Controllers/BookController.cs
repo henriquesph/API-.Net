@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestWithDotNet.Business;
+using RestWithDotNet.Data.VO;
 
 namespace RestWithDotNet.Controllers
 {
@@ -41,14 +42,14 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book book) // Pega o Json do corpo da request e converte num objeto Person
+        public IActionResult Post([FromBody] BookVO book) // Pega o Json do corpo da request e converte num objeto Person
         {
             if (book == null) return BadRequest();
             return Ok(_bookBusiness.Create(book));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book book) // Pega o Json do corpo da request e converte num objeto Person
+        public IActionResult Put([FromBody] BookVO book) // Pega o Json do corpo da request e converte num objeto Person
         {
             if (book == null) return BadRequest();
             return Ok(_bookBusiness.Update(book));
