@@ -17,6 +17,9 @@ using RestWithDotNet.Business;
 using RestWithDotNet.Repository;
 using Serilog;
 using RestWithDotNet.Repository.Generic;
+using System.Net.Http.Headers;
+using RestWithDotNet.Hypermedia.Filters;
+using RestWithDotNet.Hypermedia.Enricher;
 
 namespace RestWithDotNet
 {
@@ -50,6 +53,19 @@ namespace RestWithDotNet
                 MigrateDatabase(connection);
             }
 
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true; // para aceitar a propriedade accept setada no cabeçalho da request no Header
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml").ToString());
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json").ToString());
+            })
+            .AddXmlSerializerFormatters();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+            services.AddSingleton(filterOptions);
+
             services.AddApiVersioning();
 
             // Dependency Injection
@@ -57,6 +73,7 @@ namespace RestWithDotNet
 
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            //services.AddScoped<HyperMediaFilterOptions>(); é pra colocar essa injeção?
         }
 
 
@@ -77,6 +94,8 @@ namespace RestWithDotNet
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id}");
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/v{version=apiVersion}/{id?}");
             });
         }
         private void MigrateDatabase(string connection)

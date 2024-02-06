@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestWithDotNet.Business;
 using RestWithDotNet.Data.VO;
+using RestWithDotNet.Hypermedia.Filters;
 
 namespace RestWithDotNet.Controllers
 {
@@ -28,12 +29,14 @@ namespace RestWithDotNet.Controllers
 
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")] // path evita ambiguidade 
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindById(id);
@@ -42,6 +45,7 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person) // Pega o Json do corpo da request e converte num objeto Person
         {
             if (person == null) return BadRequest();
@@ -49,6 +53,7 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person) // Pega o Json do corpo da request e converte num objeto Person
         {
             if (person == null) return BadRequest();
@@ -56,6 +61,7 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpDelete("{id}")] // path evita ambiguidade 
+
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);
