@@ -29,6 +29,10 @@ namespace RestWithDotNet.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -36,6 +40,10 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpGet("{id}")] // path evita ambiguidade 
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -45,6 +53,9 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person) // Pega o Json do corpo da request e converte num objeto Person
         {
@@ -53,6 +64,9 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person) // Pega o Json do corpo da request e converte num objeto Person
         {
@@ -61,6 +75,9 @@ namespace RestWithDotNet.Controllers
         }
 
         [HttpDelete("{id}")] // path evita ambiguidade 
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
 
         public IActionResult Delete(long id)
         {
