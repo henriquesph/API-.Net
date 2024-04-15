@@ -40,12 +40,16 @@ namespace RestWithDotNet
                 .CreateLogger();
         }
 
-        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // CORS - Permite que a aplicação pegue recursos de outra aplicação com domínios diferentes
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            ));
             services.AddControllers();
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];  // mesma que está na appsettings.json
@@ -107,6 +111,8 @@ namespace RestWithDotNet
 
             app.UseRouting();
 
+            app.UseCors(); // só funciona nessa posição
+
             app.UseSwagger(); // gera o Json
 
             app.UseSwaggerUI(c =>
@@ -147,3 +153,7 @@ namespace RestWithDotNet
         }
     }
 }
+
+
+// Autorização Token - JWT
+// só se faz a autenticação uma vez (usuário e senha), manda-se o post request por end point de login, esse vai validar se o usuário tem a permissão e devolve o token se tiver a permissão, o client armazena esse token em uma variável do header chamada autorization, sempre que fizer as requisições, tem que mandar esse cabeçalho, caso contrário receberá um resposta de unauthorized
